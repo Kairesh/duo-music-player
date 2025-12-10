@@ -1,0 +1,376 @@
+:root {
+    --primary: #9d4edd;
+    --secondary: #c77dff;
+    --dark-bg: #10002b;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-main: #e0aaff;
+    --text-sub: #c77dff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-main);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* --- Animated Background (Cc Ball Star / Particles) --- */
+#star-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 10px white, 0 0 20px var(--primary);
+    animation: twinkle linear infinite;
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+/* --- Main Layout --- */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    height: 90vh;
+    display: flex;
+    gap: 20px;
+    z-index: 10;
+}
+
+/* --- Glassmorphism Utils --- */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* --- Player Section --- */
+.player-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    /* For small screens */
+}
+
+.visualizer-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    max-width: 90vw;
+    /* Responsive */
+    max-height: 90vw;
+    /* Responsive */
+    border-radius: 50%;
+    border: 2px solid rgba(157, 78, 221, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+}
+
+/* Spinning CD Animation */
+.cd-disc {
+    width: 300px;
+    height: 300px;
+    max-width: 55vw;
+    /* Responsive */
+    max-height: 55vw;
+    /* Responsive */
+    border-radius: 50%;
+    background: radial-gradient(circle, #000 10%, #333 100%);
+    border: 4px solid var(--secondary);
+    position: relative;
+    box-shadow: 0 0 30px rgba(157, 78, 221, 0.5);
+    animation: spin 5s linear infinite;
+    animation-play-state: paused;
+}
+
+.cd-disc.playing {
+    animation-play-state: running;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#video-placeholder {
+    display: none;
+}
+
+.video-frame {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    display: none;
+}
+
+/* --- Controls Section --- */
+.controls-overlay {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+input[type="text"] {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    padding: 12px 20px;
+    border-radius: 30px;
+    color: white;
+    outline: none;
+    transition: all 0.3s;
+    font-size: 1rem;
+    /* Better for mobile */
+}
+
+input[type="text"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(157, 78, 221, 0.3);
+}
+
+.switch-toggle {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 30px;
+    padding: 2px;
+}
+
+.switch-btn {
+    padding: 8px 16px;
+    border-radius: 28px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: #aaa;
+    transition: all 0.3s;
+}
+
+.switch-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+.playback-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-control {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-control:hover {
+    transform: scale(1.1);
+    color: var(--secondary);
+}
+
+.btn-play {
+    font-size: 3rem;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(157, 78, 221, 0.6);
+}
+
+/* --- Playlist Sidebar --- */
+.playlist-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.playlist-header {
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 10px;
+}
+
+.playlist-items {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.playlist-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.playlist-item:hover,
+.playlist-item.active {
+    background: rgba(157, 78, 221, 0.2);
+}
+
+.track-info {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Animations --- */
+.waves {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    padding: 0 20px;
+    opacity: 0.5;
+}
+
+.wave-bar {
+    flex: 1;
+    background: var(--primary);
+    animation: wave-anim 1s ease-in-out infinite;
+}
+
+@keyframes wave-anim {
+
+    0%,
+    100% {
+        height: 10%;
+    }
+
+    50% {
+        height: 80%;
+    }
+}
+
+/* --- Mobile / Tablet Responsiveness --- */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: 95vh;
+        gap: 10px;
+    }
+
+    .player-section {
+        flex: 3;
+    }
+
+    .playlist-section {
+        flex: 1;
+        max-height: 25vh;
+        /* Limit playlist height on mobile */
+    }
+
+    .controls-overlay {
+        bottom: 20px;
+        width: 90%;
+        gap: 10px;
+    }
+
+    .btn-play {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+
+    .btn-control {
+        font-size: 1.2rem;
+    }
+
+    .visualizer-container {
+        width: 80vw;
+        height: 80vw;
+    }
+
+    .cd-disc {
+        width: 50vw;
+        height: 50vw;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    .switch-toggle {
+        justify-content: center;
+    }
+}
