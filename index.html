@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duo Music Player</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Socket.IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <div id="star-bg"></div>
+
+    <div class="container">
+        <!-- Main Player Section -->
+        <div class="player-section glass-panel">
+
+            <!-- CD Animation Overlay -->
+            <div class="visualizer-container">
+                <div class="cd-disc" id="cd-disc"></div>
+            </div>
+
+            <!-- Actual Video Player (Hidden or Visible based on toggle) -->
+            <div id="player-container" class="video-frame">
+                <div id="youtube-player"></div>
+            </div>
+
+            <!-- Virtual Waves -->
+            <div class="waves" id="waves-container">
+                <!-- JS will populate bars -->
+            </div>
+
+            <!-- Controls -->
+            <div class="controls-overlay glass-panel">
+                <div style="text-align: center; font-size: 0.8rem; margin-bottom: 5px;">
+                    Status: <span id="connection-status" style="color: yellow;">Connecting...</span> | <span
+                        id="now-playing-text">No Song</span>
+                </div>
+                <!-- Link Input -->
+                <div class="input-group">
+                    <div class="switch-toggle">
+                        <div class="switch-btn active" data-source="youtube" onclick="setSource('youtube')"><i
+                                class="fab fa-youtube"></i></div>
+                        <div class="switch-btn" data-source="spotify" onclick="setSource('spotify')"><i
+                                class="fab fa-spotify"></i></div>
+                    </div>
+                    <input type="text" id="link-input" placeholder="Paste YouTube Link here...">
+                    <button class="btn-control" onclick="loadLink()" title="Play Now"><i
+                            class="fas fa-play"></i></button>
+                    <button class="btn-control" onclick="addToQueue()" title="Add to Queue"><i
+                            class="fas fa-list-ul"></i></button>
+                </div>
+
+                <!-- Playback Buttons -->
+                <div class="playback-controls">
+                    <button class="btn-control" onclick="seek(-10)" title="Rewind 10s"><i
+                            class="fas fa-backward"></i></button>
+                    <button class="btn-play" onclick="togglePlay()"><i class="fas fa-play" id="play-icon"></i></button>
+                    <button class="btn-control" onclick="seek(10)" title="Forward 10s"><i
+                            class="fas fa-forward"></i></button>
+                    <button class="btn-control" onclick="skipSong()" title="Next Song"><i
+                            class="fas fa-step-forward"></i></button>
+                    <button class="btn-control" onclick="toggleLoop()" id="loop-btn" title="Loop"><i
+                            class="fas fa-redo"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Playlist Sidebar -->
+        <div class="playlist-section glass-panel">
+            <div class="playlist-header">
+                <i class="fas fa-list"></i> Shared Playlist
+            </div>
+            <div class="playlist-items" id="playlist-container">
+                <!-- Items added dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
