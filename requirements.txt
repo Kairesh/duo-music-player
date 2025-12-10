@@ -1,4 +1,4 @@
 flask
 flask-socketio
 eventlet
-gunicorn
+gunicorn==20.1.0
